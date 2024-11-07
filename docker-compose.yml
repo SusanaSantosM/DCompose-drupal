@@ -1,0 +1,33 @@
+services:
+
+  drupal:
+    image: drupal
+    ports:
+      - "3080:80"
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles
+      - /var/www/html/themes
+      - /var/www/hmtl/sites
+    restart: unless-stopped
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgresdb
+      POSTGRES_USER: susibel
+      POSTGRES_PASSWORD: postgress
+    restart: unless-stopped
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "3081:8080"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
